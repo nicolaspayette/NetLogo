@@ -138,6 +138,7 @@ lazy val netlogo = project.in(file("netlogo-gui")).
     resourceGenerators in Compile += I18n.resourceGeneratorTask.taskValue,
     threed := { System.setProperty("org.nlogo.is3d", "true") },
     nogen  := { System.setProperty("org.nlogo.noGenerator", "true") },
+    resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/",
     libraryDependencies ++= Seq(
       "org.ow2.asm" % "asm-all" % "5.0.4",
       "org.picocontainer" % "picocontainer" % "2.13.6",
@@ -156,7 +157,9 @@ lazy val netlogo = project.in(file("netlogo-gui")).
       "com.googlecode.json-simple" % "json-simple" % "1.1.1",
       "com.fifesoft" % "rsyntaxtextarea" % "2.6.0",
       "com.typesafe" % "config" % "1.3.1",
-      "net.lingala.zip4j" % "zip4j" % "1.3.2"
+      "net.lingala.zip4j" % "zip4j" % "1.3.2",
+      "com.typesafe.play" %% "play-ahc-ws-standalone" % "1.0.7",
+      "com.typesafe.play" %% "play-ws-standalone-json" % "1.0.7"
     ),
     all := {},
     all := {
