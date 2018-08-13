@@ -88,6 +88,22 @@ object FileManager {
     }
   }
 
+  class GitHubModelsAction(manager: FileManager, parent: Component)
+  extends ExceptionCatchingAction("GitHub models...", parent)
+  with MenuAction {
+    category    = UserAction.FileCategory
+    group       = UserAction.FileOpenGroup
+    rank        = 4
+    accelerator = UserAction.KeyBindings.keystroke('G', withMenu = true)
+
+    @throws(classOf[UserCancelException])
+    override def action(): Unit = {
+      manager.aboutToCloseFiles()
+      for ((uri, source) <- App.app.gitHubModelsDialog.getModel())
+        manager.openFromSource(uri, source, ModelType.Library)
+    }
+}
+
   class ImportClientAction(manager: FileManager, workspace: AbstractWorkspaceScala, parent: Component)
   extends ExceptionCatchingAction(I18N.gui.get("menu.file.import.hubNetClientInterface") + Ellipsis, parent)
   with MenuAction {
@@ -394,6 +410,7 @@ class FileManager(workspace: AbstractWorkspaceScala,
     new OpenAction(this, parent),
     new QuitAction(this, parent),
     new ModelsLibraryAction(this, parent),
+    new GitHubModelsAction(this, parent),
     new SaveAsNetLogoWebAction(this, workspace, modelSaver, parent),
     new ImportClientAction(this, workspace, parent))
 
